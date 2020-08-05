@@ -1,0 +1,242 @@
+<!--TODO... Optimizing-->
+<!DOCTYPE html>
+<html ng-app>
+
+<head>
+  <meta charset="utf-8">
+  <title>Look Ahead</title>
+  <link rel="icon" href="seo-and-web.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="text.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <style>
+    body {
+      /*  display: flex;
+  		  align-items: flex-start;*/
+      background: #141E30;
+      /* fallback for old browsers */
+      background: #D3CCE3;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #E9E4F0, #D3CCE3);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      font-family: 'Roboto thin', sans-serif;
+      height: 725px;
+    }
+
+    body,
+    .button:after,
+    #listlang:after {
+      background: #141E30;
+      /* fallback for old browsers */
+      background: #D3CCE3;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #E9E4F0, #D3CCE3);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .b-pink,
+    .b-pink:before {
+      background: rgba(233, 228, 240, 1);
+      background: -moz-linear-gradient(45deg, rgb(214, 210, 214) 0%, rgb(108, 125, 161) 100%);
+      background: -webkit-gradient(left bottom, right top, color-stop(0%, rgb(95, 133, 216)), color-stop(100%, rgb(210, 204, 224)));
+      background: -webkit-linear-gradient(45deg, rgb(157, 183, 204) 0%, rgb(121, 195, 218) 100%);
+      background: -o-linear-gradient(45deg, rgb(127, 168, 202) 0%, rgb(146, 172, 255) 100%);
+      background: -ms-linear-gradient(45deg, rgb(8, 123, 255) 0%, rgb(137, 194, 194) 100%);
+      background: linear-gradient(45deg, rgb(0, 162, 255) 0%, rgb(0, 255, 42) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e748ea', endColorstr='#4b1abc', GradientType=1);
+    }
+
+    .b-pink,
+    .b-pink:before {
+      background: rgba(233, 228, 240, 1);
+      background: -moz-linear-gradient(45deg, rgb(214, 210, 214) 0%, rgb(199, 216, 255) 100%);
+      background: -webkit-gradient(left bottom, right top, color-stop(0%, rgb(199, 216, 255)), color-stop(100%, rgb(210, 204, 224)));
+      background: -webkit-linear-gradient(45deg, rgb(239, 248, 255) 0%, rgb(255, 255, 255) 100%);
+      background: -o-linear-gradient(45deg, rgb(81, 151, 209) 0%, rgb(115, 148, 255) 100%);
+      background: -ms-linear-gradient(45deg, rgb(129, 188, 255) 0%, rgb(152, 189, 204) 100%);
+      background: linear-gradient(45deg, rgba(119, 203, 241, 0.911) 0%, rgb(0, 89, 255) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e748ea', endColorstr='#4b1abc', GradientType=1);
+    }
+
+    .button {
+      display: inline-block;
+      position: relative;
+      border-radius: 3px;
+      text-decoration: none;
+      padding: .4em;
+      margin: .5em;
+      font-size: 2em;
+      font-weight: bold;
+      font-family: Roboto thin;
+      transition: all .5s;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .button:hover {
+      text-shadow: 0px 0px 0px rgba(233, 228, 240, 1);
+      cursor: pointer;
+    }
+
+    .button:hover:after {
+      left: 100%;
+      top: 100%;
+      bottom: 100%;
+      right: 100%;
+    }
+
+    .button:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      z-index: -1;
+      border-radius: 5px;
+      transition: all .5s;
+    }
+
+    .button:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      bottom: 2px;
+      right: 2px;
+      z-index: -1;
+      border-radius: 5px;
+      transition: all .5s;
+    }
+
+    #buttonBox {
+      display: flex;
+      justify-content: center;
+    }
+
+    #listlang {
+      display: inline-block;
+      position: relative;
+      border-radius: 3px;
+      text-decoration: none;
+      padding: .4em;
+      margin: .5em;
+      font-size: 2em;
+      font-weight: bold;
+      font-family: Roboto thin;
+      transition: all .5s;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: rgb(0, 156, 228);
+    }
+
+    #listlang:hover {
+      text-shadow: 0px 0px 0px rgba(233, 228, 240, 1);
+      cursor: pointer;
+    }
+
+    #listlang:hover:after {
+      left: 100%;
+      top: 100%;
+      bottom: 100%;
+      right: 100%;
+    }
+
+    #listlang:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      z-index: -1;
+      border-radius: 5px;
+      transition: all .5s;
+    }
+
+    #listlang:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      bottom: 2px;
+      right: 2px;
+      z-index: -1;
+      border-radius: 5px;
+      transition: all .5s;
+    }
+
+    .lbl {
+      font-size: 25px;
+      display: inline-block;
+      position: relative;
+      border-radius: 3px;
+      text-decoration: none;
+      padding: .1em;
+      margin: .2em;
+      font-size: 2em;
+      font-weight: bold;
+      font-family: Roboto thin;
+      transition: all .5s;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: rgb(0, 156, 228);
+    }
+
+    #docs {
+      -webkit-text-fill-color: rgb(0, 94, 235);
+      text-decoration: none;
+      transition: background-color 0.99s;
+    }
+
+    *::-webkit-scrollbar{
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="buttonBox">
+    <div id="ChangeText" class="button b-pink"
+      onclick="text = prompt('Change Text: '); punctuationless = text.replace(/[\/#.!$%\^&\*;,:{}=\-_`~()]/g,' '); text = punctuationless.replace(/\s{2,}/g,' '); t = text.split(' '); i = 0; p.innerHTML = '';">
+      change text</div>
+    <div id="someButton" class="button b-pink" onclick="doSomething()">set time</div>
+    <div class="button b-pink" onclick="speech()" init="Listen=0">talk</div>
+    <div class="button b-pink" onclick="stop()">stop</div>
+    <div class="button b-pink" onclick="language = prompt('Enter Language Code:'); recognizer.lang = language;">change language</div>
+    <label class="lbl" style="display: flex; align-items:center;" for="languages">talk language:</label>
+    <select name="language" onchange="setLanguage()" id="listlang">
+      <option value="en-En">english</option>
+      <option value="ru-Ru">russian</option>
+      <option value="hy-Hy">armenian</option>
+    </select>
+  </div>
+
+  <script src="script.js"></script>
+
+  <a target="_blank"
+    style="display: flex; justify-content: flex-end; align-content: flex-end; margin-top: 24%; font-size: 35px;"
+    id="docs" href="docs.html">instruction
+  </a>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
