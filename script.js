@@ -1,16 +1,21 @@
-alert("If you don't now how to use this project\nthan click to instruction link!")
-
 //Converting Text To Array`
 var text = str
-var punctuationless = text.replace(/[\/#.!$%\^&\*;,:{}=\-_`~()]/g, " ")
+var punctuationless = text.replace(/[\/#.!$%\^&\*;,:{}=\_~()]/g, " ")
 text = punctuationless.replace(/\s{2,}/g, " ")
 var t = text.split(" ")
 var i = 0
 
+//Check When Text is Ending/Starting`
 function check() {
     if (i >= t.length) {
-        alert("Text Ends!")
         i = 0
+        setTimeout(() => {
+            alert("Text Ends!")
+            p.innerHTML = t[i]
+        }, 75)
+    } else if (i < 0) {
+        i = t.length - 1;
+        p.innerHTML = t[i]
     }
 }
 
@@ -30,9 +35,11 @@ var p = document.createElement('p')
 p.style.fontSize = 100 + 'px'
 p.style.display = 'flex'
 p.style.justifyContent = 'center'
+p.innerHTML = t[i]
 
 var container = document.getElementsByClassName("container")
 var div = document.getElementById("someButton")
+//hmi imast chka esi dnel!!! es takiny`
 //container[0].appendChild(p)
 document.body.appendChild(p)
 
@@ -41,12 +48,36 @@ p.onclick = function () {
     alert(`Your Inputed Text: ${text}`)
 }
 
+//Changing Text`
+function changeText() {
+    text = prompt('Change Text: ');
+    localStorage.removeItem('text')
+    localStorage.setItem('text', text)
+
+    text = text.toLowerCase()
+
+    punctuationless = text.replace(/[\/#.!$%\^&\*;,:{}=\_`~()]/g, ' ');
+    text = punctuationless.replace(/\s{2,}/g, ' ');
+    t = text.split(' ');
+    i = 0;
+
+    if (p != null){
+        p.innerHTML = t[i];
+    }
+}
+
+//Changing Language by lang-code`
+function changeLanguage(){
+    language = prompt('Enter Language Code:')
+    recognizer.lang = language;
+}
+
 //Scrolling`
 function scrollingText() {
     $('body').on('DOMMouseScroll mousewheel', function (event) {
         if (event.originalEvent.detail > 0 || event.originalEvent.wheelDelta < 0) {
-            if (i >= 0){
-                p.innerHTML = t[i--] 
+            if (i >= 0) {
+                p.innerHTML = t[--i]
                 check()
             }
         } else if (i < t.length) {
@@ -61,20 +92,24 @@ function scrollingText() {
 var recognizer = new webkitSpeechRecognition()
 recognizer.interimResults = true
 recognizer.lang = language
+//Recognizeri Sharunakvely`
+//recognizer.continuous = true
 
 recognizer.onresult = function (event) {
     var result = event.results[event.resultIndex]
-    if (result.isFinal) {
+    //if (result.isFinal) {
         for (var i = 0; i < text.length; i++) {
-            if (result[0].transcript[0] == t[i][0]) {
-                console.log(t[i++])
+            if (result[0].transcript/*[0]*/ == t[i]/*[0]*/) {
+                console.log('Result: ', t[i++])
                 p.innerHTML = t[i++]
                 check()
+                break
             }
         }
-    } else {
+    //} else {
         console.log('RealTime Result: ', result[0].transcript)
-    }
+       // console.log("not ")
+   // }
 }
 
 //Recognize Functions`
@@ -88,22 +123,28 @@ var utterance = new SpeechSynthesisUtterance(`How about we say this now? This is
 function talk() {
     synth.speak(utterance)
 }
+
 function stop() {
     synth.pause()
 }
 
 //When Load Default Scrolling`
 scrollingText()
-
+    
 
 //Set Timing`
 var a = 0
 var interval = null
+var timeNumber
 function doSomething() {
     if (a % 2 == 0) {
-        var ms = parseInt(prompt("Enter MiliSecond Of Slide Speed: "))
+        timeNumber = prompt("Enter Second Of Slide Speed: ")   
+        while (timeNumber == null || timeNumber == "" || !Number(timeNumber)) {
+            timeNumber = prompt("Enter Second Of Slide Speed: ")
+        }
+        ms = Number(timeNumber)
         div.innerHTML = "stop time"
-        interval = setInterval(() => { p.innerHTML = t[i++]; check() }, ms)
+        interval = setInterval(() => { p.innerHTML = t[i++]; check() }, ms*1000)
     } else {
         clearInterval(interval, 1)
         div.innerHTML = "set time"
@@ -123,7 +164,7 @@ window.addEventListener('keydown', function (e) {
     }
     else if (e.keyCode == '40') {
         // down arrow
-        p.innerHTML = t[i--]
+        p.innerHTML = t[--i]
         check()
     }
 
@@ -134,7 +175,7 @@ window.addEventListener('keydown', function (e) {
     }
     else if (e.keyCode == '37') {
         // left arrow
-        p.innerHTML = t[i--]
+        p.innerHTML = t[--i]
         check()
     }
 
@@ -146,7 +187,7 @@ window.addEventListener('keydown', function (e) {
     }
     else if (e.code == 'KeyS') {
         // down arrow
-        p.innerHTML = t[i--]
+        p.innerHTML = t[--i]
         check()
     }
 
@@ -157,7 +198,7 @@ window.addEventListener('keydown', function (e) {
     }
     else if (e.code == 'KeyA') {
         // left arrow
-        p.innerHTML = t[i--]
+        p.innerHTML = t[--i]
         check()
     }
 

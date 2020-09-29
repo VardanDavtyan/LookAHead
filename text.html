@@ -4,7 +4,8 @@
     <link rel="icon" href="coding.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instruction</title>
+    <script src="script.js"></script>
+    <title>Your Text</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 
@@ -22,7 +23,7 @@
         	/*background-color: #3179ad;*/
         	color: rgb(0, 13, 48);
         	text-align: center;
-            font-family: 'Roboto', sans-serif;
+            font-family: Roboto thin;
             border-radius: 20px;
             float: right;
             bottom: 100%;
@@ -33,36 +34,23 @@
         	color: #156096;
         	text-align: center;
         	text-shadow: #4c4c4c;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Roboto', sans-serif;   
         }
 
         p{
             font-size: 25px;
-            font-family: 'Roboto bold', sans-serif;
+            font-family: 'Roboto bold', sans-serif;   
             display: flex;
             justify-content: center;
-        }
-
-        *::-webkit-scrollbar {
-            display: none;
         }
     </style>
 </head>
 <body>
-    <h1>How To Use?</h1><hr>
-    <p>Buttons`<br/>
-        &nbsp;&nbsp;&nbsp;[show text] - opens your text in new tab,<br/>
-        &nbsp;&nbsp;&nbsp;[change text] - change your text that you should say,<br/>
-        &nbsp;&nbsp;&nbsp;[set time] - enter mili seconds, and your text words are slided in this time<br/>
-        &nbsp;&nbsp;&nbsp;[stop time] - stop timing,<br/>
-        &nbsp;&nbsp;&nbsp;[talk] - talk the word in the text and in the web should be shown the second word,<br/>
-        &nbsp;&nbsp;&nbsp;[stop] - stop recognising your voice,<br/>
-        &nbsp;&nbsp;&nbsp;[talk languages listBox] - select default languages to recognise your voice in selected language, <br/>
-        &nbsp;&nbsp;&nbsp;[change language] - enter the language that you should speak.<br/>
-    </p>
+    <p id='pi'></p>
     <script>
-        for(var i = 0; i < 13; i++) document.write('<br />')
+        var p = document.getElementById('pi')
+        var text = localStorage.getItem("text")
+        p.innerHTML = text;
     </script>
-    <h3 class="second">Created By Vardan Davtyan For Tumo</h3>
 </body>
 </html>
